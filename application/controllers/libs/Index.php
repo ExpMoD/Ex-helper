@@ -18,18 +18,4 @@ class Index extends CI_Controller
         $data['title'] = 'Libraries';
         $this->load->view('welcome_message', $data);
     }
-
-    public function js()
-    {
-        $data = array();
-        $data['title'] = 'js';
-        $this->load->view('welcome_message', $data);
-    }
-
-    public function css()
-    {
-        $data = array();
-        $data['title'] = 'css';
-        $this->load->view('welcome_message', $data);
-    }
 }
