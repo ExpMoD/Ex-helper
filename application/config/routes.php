@@ -49,6 +49,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
+$route['default_controller'] = 'main';
+
+
+$route['libs'] = "libs/index";
+
+$route['libs/js/(:any)'] = "libs/js/all/$1";
+$route['libs/js/(:any)/last'] = "libs/js/last/$1";
+$route['libs/js/(:any)/first'] = "libs/js/first/$1";
+
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
