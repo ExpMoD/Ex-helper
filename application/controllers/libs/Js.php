@@ -26,14 +26,14 @@ class Js extends CI_Controller
         $this->load->view('welcome_message', $data);
     }
 
-    public function last($name = null)
+    public function first($name = null)
     {
         $data = array();
         $data['title'] = urldecode($name).' Last';
         $this->load->view('welcome_message', $data);
     }
 
-    public function first($name = null)
+    public function last($name = null)
     {
         $data = array();
         $data['title'] = urldecode($name).' Last';
