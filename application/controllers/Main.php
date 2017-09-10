@@ -15,6 +15,10 @@ class Main extends CI_Controller
 
     public function index()
     {
-        $this->load->view('welcome_message');
+        $data = array();
+        $data['title'] = "Главная страница";
+        $this->load->view('template/header', $data);
+        $this->load->view('template/main', $data);
+        $this->load->view('template/footer', $data);
     }
 }
