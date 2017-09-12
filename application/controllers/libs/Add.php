@@ -1,29 +1,33 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: Andrey
- * Date: 09.09.2017
- * Time: 20:03
+ * Date: 12.09.2017
+ * Time: 13:25
  */
-class Main extends CI_Controller
+
+
+class Add extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-
-        $this->load->model('constructor');
     }
 
     public function index()
     {
         $data = array();
-        $data['title'] = "Главная страница";
-        $data['blocks'] = $this->constructor->blocks_create(["Последние добавленные библиотеки"]);
+        $data['title'] = 'Добавление библиотеки';
+
 
         $this->load->view('template/header', $data);
         $this->load->view('template/main-menu', $data);
-        $this->load->view('pages/index', $data);
+        //$this->load->view('template/admin-menus/admin-menu-libs');
+
+        $this->load->view('pages/libs/add', $data);
+
         $this->load->view('template/footer', $data);
     }
 }
+
+

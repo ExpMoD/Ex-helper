@@ -17,13 +17,20 @@
     <title><?php echo $title;?></title>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url("assets/js/jquery-ui.min.js");?>"></script>
 
-    <link rel="stylesheet" href="assets/css/main_style.css">
+
+    <link rel="stylesheet" href="<?php echo base_url("assets/css/main_style.css"); ?>">
+
+
+    <link type="text/css" rel="stylesheet" href="<?php echo base_url("assets/css/jquery-ui.min.css");?>">
+    <link type="text/css" rel="stylesheet" href="<?php echo base_url("assets/css/jquery-ui.theme.min.css");?>">
+    <link type="text/css" rel="stylesheet" href="<?php echo base_url("assets/css/jquery-ui.structure.min.css");?>">
 </head>
 <body>
     <div id="wrapper">
         <div id="logo" class="block">
             <div>
-                <img src="assets/img/logo-exphelper.png">
+                <img src="<?php echo base_url("assets/img/logo-exphelper.png"); ?>">
             </div>
         </div>

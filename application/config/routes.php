@@ -54,6 +54,8 @@ $route['default_controller'] = 'main';
 
 $route['libs'] = "libs/index";
 
+//$route['libs/add'] = 'libs/add';
+
 $route['libs/js/(:any)'] = "libs/js/all/$1";
 $route['libs/js/(:any)/last'] = "libs/js/last/$1";
 $route['libs/js/(:any)/first'] = "libs/js/first/$1";
