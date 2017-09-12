@@ -41,7 +41,9 @@ body{
 }
 
 
-
+.block-content{
+    margin: 0 10px 10px 10px;
+}
 
 
 
@@ -161,7 +163,7 @@ body{
 
 
 
-input[type=text]{
+.input-text-std{
     font-size: 16px;
     padding-left: 17px;
     padding-right: 17px;
@@ -169,6 +171,7 @@ input[type=text]{
     color: #454545;
 
     height: 32px;
+    width: 214px;
 
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
@@ -179,14 +182,14 @@ input[type=text]{
 }
 
 
-input[type=text]:focus, input[type=text]:hover{
+.input-text-std:focus, .input-text-std:hover{
     color: #000;
     background-color: #EDEDED;
 }
 
 
 
-textarea{
+.input-textarea-std{
     border-top-right-radius: 3px;
     border-top-left-radius: 3px;
     border-bottom-right-radius: 3px;
@@ -211,7 +214,7 @@ textarea{
 }
 
 
-textarea:focus, textarea:hover{
+.input-textarea-std:focus, .input-textarea-std:hover{
     color: #000;
     background-color: #EDEDED;
 }
@@ -219,10 +222,51 @@ textarea:focus, textarea:hover{
 
 
 
-input[type=text]:focus{
+.input-text-std:focus{
     outline: 1px solid #0073ff;
 }
 
-textarea:focus{
+.input-textarea-std:focus{
     outline: 1px solid #0073ff;
+}
+
+
+
+
+
+
+.input-file-upload{
+    display: inline-block;
+}
+.input-file{
+    display:none;
+}
+.input-file-upload label{
+    cursor:pointer;
+    background:#0073ff;
+    border-radius:3px;
+    padding: 7px 10px 8px 10px;
+    color:#fff;
+    text-align: center;
+}
+.input-file-upload label:hover{
+    background: #005bb1;
+}
+.input-file-name {
+    display: inline-block;
+    color: #000;
+    margin-left: 8px;
+}
+
+
+
+
+
+.table-full{
+    width: 100%;
+}
+
+
+.left-col, .right-col{
+    width: 50%;
 }
