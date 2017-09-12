@@ -17,8 +17,16 @@ class Main extends CI_Controller
     {
         $data = array();
         $data['title'] = "Главная страница";
+
+        $data['blocks'] = array(array());
+
+
+        $data['blocks'][0]["title"] = "Последние добавленные библиотеки";
+        $data['blocks'][0]["content"] = array();
+
         $this->load->view('template/header', $data);
-        $this->load->view('template/main', $data);
+        $this->load->view('template/main-menu', $data);
+        $this->load->view('pages/index', $data);
         $this->load->view('template/footer', $data);
     }
 }

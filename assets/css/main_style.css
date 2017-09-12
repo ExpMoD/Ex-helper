@@ -29,3 +29,31 @@ body{
     padding-bottom: 10px;
     border-bottom: 1px solid #999;
 }
+
+
+
+#main-menu{
+    list-style: none;
+}
+
+#main-menu>li{
+    display: inline-block;
+    cursor: pointer;
+
+}
+
+#main-menu>li>a{
+    display: inline-block;
+    color: #000;
+    font-weight: bold;
+    font-size: 20px;
+
+    text-decoration: none;
+    
+    padding: 10px 20px 10px 20px;
+}
+
+#main-menu>li:hover{
+    color: #fff;
+    background-color: #ee872d;
+}

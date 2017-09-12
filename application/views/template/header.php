@@ -21,4 +21,9 @@
     <link rel="stylesheet" href="assets/css/main_style.css">
 </head>
 <body>
-
+    <div id="wrapper">
+        <div id="logo" class="block">
+            <div>
+                <img src="assets/img/logo-exphelper.png">
+            </div>
+        </div>
