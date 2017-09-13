@@ -20,15 +20,13 @@
                 <tr>
                     <td>
                         <select name="library-type" id="library-type">
-                            <option value="css">CSS</option>
                             <option value="js">JS</option>
+                            <option value="css">CSS</option>
                         </select>
                     </td>
                     <td>
                         <select name="library-exist-name" id="library-exist-name">
                             <option value="new">{{ Новая библиотека }}</option>
-                            <option value="Jquery 2">Jquery 2</option>
-                            <option value="Jquery 3">Jquery 3</option>
                         </select>
                     </td>
                 </tr>
@@ -79,19 +77,74 @@
     //region ----- Form handlers -----
 
     $(function () {
+        update_libraryType($('#library-type').children('option:selected').val());
+        update_libraryExistName($('#library-exist-name').children('option:selected').val());
+
         $('#library-type').on('selectmenuchange', function() {
             var optionSelected = $("option:selected", this);
-            var valueSelected = this.value;
-            Ajax_Transmitter();
+            var selectedValue = this.value;
+
+            update_libraryType(selectedValue);
         });
         
+        function update_libraryType(selectedValue){
+            var AjaxData = {
+                selectedValue: selectedValue
+            };
+
+            Ajax_Transmitter(AjaxData, 'page_add_getLibsByType', {
+                success: function (returnData) {
+                    if(IsJsonString(returnData)){
+                        var array = JSON.parse(returnData);
+
+                        $('#library-exist-name').children('option').not('[value="new"]').remove();
+
+                        array.forEach(function (item, i, arr) {
+                            $('#library-exist-name').addOption(item, item);
+                        });
+
+                        $('#library-exist-name').selectmenu('refresh');
+                    }else{
+                        alert("Ошибка в returnData #library-type selectmenuchange");
+                    }
+                },
+                error: function (jqXHR, exception) {
+                    alert(jqXHR);
+                }
+            });
+        }
+
+        
+        $('#library-exist-name').on('selectmenuchange', function () {
+            var optionSelected = $("option:selected", this);
+            var selectedValue = this.value;
+            update_libraryExistName(selectedValue);
+        });
+        
+        function update_libraryExistName(selectedValue) {
+            if(selectedValue == "new"){
+                $('#library-name').prop('disabled', false).val("");
+            }else{
+                $('#library-name').prop('disabled', true).val(selectedValue);
+            }
+        }
         
         
-        function Ajax_Transmitter() {
+        
+        function Ajax_Transmitter(data, handlerName, callbacks = {}) {
             $.ajax({
-                url: '<?php echo base_url("libs/handlers/add"); ?>',
-                success: function(){
-                    alert('Load was performed.');
+                method: 'POST',
+                url: '<?php echo base_url("libs/handlers/"); ?>'+handlerName,
+                data: data,
+                success: function(text){
+                    if(isFunction(callbacks.success)){
+                        callbacks.success(text);
+                    }
+                },
+                error: function (jqXHR, exception) {
+                    if(isFunction(callbacks.error)){
+                        callbacks.error(jqXHR, exception)
+                    }
                 }
             });
         }

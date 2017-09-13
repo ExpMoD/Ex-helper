@@ -28,8 +28,16 @@ class Handlers extends CI_Controller
     }
 
 
-    public function add()
+    public function page_add_getLibsByType()
     {
-        echo "Message";
+        $selVal = $_POST['selectedValue'];
+
+        if($selVal == 'js'){
+            $libsArray = ["Jquery 3", "Jquery 2", "Jquery 1"];
+            echo json_encode($libsArray);
+        }else if($selVal == 'css'){
+            $libsArray = ["Jquery UI Structure", "Jquery UI", "Jquery UI Styles"];
+            echo json_encode($libsArray);
+        }
     }
 }

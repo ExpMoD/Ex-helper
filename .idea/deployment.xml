@@ -7,6 +7,10 @@
           <mappings>
             <mapping deploy="/www/exphelper.h1n.ru" local="$PROJECT_DIR$" web="/" />
           </mappings>
+          <excludedPaths>
+            <excludedPath path="/www/exphelper.h1n.ru/user_guide" />
+            <excludedPath local="true" path="$PROJECT_DIR$/user_guide" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>
