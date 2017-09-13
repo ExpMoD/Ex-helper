@@ -42,11 +42,89 @@ class Handlers extends CI_Controller
     }
 
 
+    /**
+     *
+     */
     public function page_add_addLib(){
-        //echo $_POST['type '];
-        echo json_encode($_POST);
-        if(isset($_FILES['library-file']))
-            echo $_FILES['library-file']['name'];
+        $retVal = array('errors' => array());
+
+
+        $config['upload_path'] = 'uploads/libs/';
+        $config['allowed_types'] = 'php|js|css';
+
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $post = array(
+                'type' => (isset($_POST['library-type']))?$_POST['library-type']:null,
+                'existName' => (isset($_POST['library-exist-name']))?str_replace('.', '_', $_POST['library-exist-name']):null,
+                'name' => (isset($_POST['library-name']))?str_replace('.','_', $_POST['library-name']):null,
+                'version' => (isset($_POST['library-version']))?str_replace('.','_',$_POST['library-version']):null,
+                'url' => (isset($_POST['library-url']))?$_POST['library-url']:null,
+            );
+
+            $filename_generated = $post['name'].'-'.$post['version'].'.'.$post['type'];
+
+            if($post['type'] != 'css' and $post['type'] != 'js')
+                array_push($retVal['errors'], 'Недоступный тип библиотеки');
+            if($post['existName'] == 'new' and  $post['name'] == null)
+                array_push($retVal['errors'], 'Имя файла не введено');
+            if($post['version'] == null)
+                array_push($retVal['errors'], 'Номер версии не введен');
+            if($post['url'] == null and !isset($_FILES['library-file']))
+                array_push($retVal['errors'], 'Не выбран файл или ссылка на него');
+
+
+            // Существование ссылки (URL)
+            function check_url($url){
+                $url_c=parse_url($url);
+                if (!empty($url_c['host']) and checkdnsrr($url_c['host'])){
+                    if ($otvet=@get_headers($url)){
+                        return substr($otvet[0], 9, 3);
+                    }
+                }
+                return false;
+            }
+
+
+            if($post['url'] != null){
+                if(check_url($post['url'])){
+                    $finfo = new finfo(FILEINFO_MIME_TYPE);
+                    $typeFileUrl = $finfo->buffer(file_get_contents($post['url']));
+                    if($typeFileUrl != "text/plain"){
+                        array_push($retVal['errors'], 'Файл имеет не допустимый mime тип');
+                    }else if(empty($retVal['errors'])){
+                        $local=$config['upload_path'].$filename_generated;
+                        if(!file_put_contents($local, file_get_contents($post['url']))){
+                            array_push($retVal['errors'], 'Ошибка записи файла');
+                        }else{
+                            echo "Файл ".$filename_generated." Загружен";
+                        }
+                    }
+                }else{
+                    array_push($retVal['errors'], 'Ссылка не доступна');
+                }
+            }else if($_FILES['library-file'] != null){
+                if($_FILES['library-file']['size'] != 0){
+                    $config['file_name'] = $filename_generated;
+                    $this->load->library('upload', $config);
+                    $this->upload->initialize($config);
+
+                    if(!$this->upload->do_upload("library-file")){
+                        array_push($retVal['errors'], $this->upload->display_errors());
+                    }else{
+                        echo "Файл ".$filename_generated." Загружен";
+                    }
+                }else{
+                    array_push($retVal['errors'], 'Файл пустой');
+                }
+            }
+
+            //echo json_encode($retVal, JSON_UNESCAPED_UNICODE);
+
+
+
+            //return json_encode($retVal, JSON_UNESCAPED_UNICODE);
+        }
 
     }
 }
