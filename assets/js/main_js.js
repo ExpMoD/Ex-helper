@@ -5,17 +5,23 @@
 $(document).ready( function() {
     $(".input-file").change(function(){
         var filename = $(this).val().replace(/.*\\/, "");
-        $(".input-file-name").html(filename);
+        $(this).parent().parent().find(".input-file-name").html(filename);
+        this.dispatchEvent(new Event('changeFile'));
     });
 
+    $('.input-file-clear').on('click', function () {
+        var input = $(this).parent().find('.input-file');
+        var fileName = input.val();
 
-
+        if(fileName) { // returns true if the string is not empty
+            input.val('');
+            $(this).parent().find('.input-file-name').html("Файл не выбран");
+            input[0].dispatchEvent(new Event('changeFile'));
+        }
+    });
 });
 
 
-
-name="checkThisName";
-if ( isFunction(window[name]) ) alert ("I am function");
 
 // isFunction взято со стэка
 function isFunction(functionToCheck)  {
@@ -33,6 +39,13 @@ function IsJsonString(str) {
     }
     return true;
 }
+
+
+
+
+
+
+
 
 
 

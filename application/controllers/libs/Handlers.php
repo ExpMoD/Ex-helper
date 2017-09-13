@@ -40,4 +40,13 @@ class Handlers extends CI_Controller
             echo json_encode($libsArray);
         }
     }
+
+
+    public function page_add_addLib(){
+        //echo $_POST['type '];
+        echo json_encode($_POST);
+        if(isset($_FILES['library-file']))
+            echo $_FILES['library-file']['name'];
+
+    }
 }

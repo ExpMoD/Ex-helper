@@ -258,6 +258,9 @@ body{
     margin-left: 8px;
 }
 
+.input-file-disabled label{
+    background-color: #aaa !important;
+}
 
 
 
@@ -267,6 +270,10 @@ body{
 }
 
 
-.left-col, .right-col{
+.table-full-left-col, .table-full-right-col{
     width: 50%;
+}
+
+.table-full-row td{
+    padding-top: 10px;
 }
