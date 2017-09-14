@@ -52,10 +52,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="padding-top: 10px;" colspan="2" align="center"><input id="library-submit" type="submit" value="Добавить"></td>
+                    <td style="padding-top: 10px;" colspan="2" align="center"><input id="library-submit" type="submit" value="Добавить">
+                        <input id="library-reset" type="reset" value="Сбросить"></td>
                 </tr>
             </table>
         </form>
+        <div id="errors">
+
+        </div>
     </div>
 </div>
 
@@ -71,6 +75,7 @@
         width: 250
     });
     $('#library-submit').button();
+    $('#library-reset').button();
 
 
 
@@ -79,6 +84,19 @@
     $(function () {
         update_libraryType($('#library-type').children('option:selected').val());
         update_libraryExistName($('#library-exist-name').children('option:selected').val());
+
+        $('#library-reset').on('click', function (e) {
+            e.preventDefault();
+
+            $(this).closest('form').get(0).reset();
+
+            update_libraryType($('#library-type').children('option:selected').val());
+            update_libraryExistName($('#library-exist-name').children('option:selected').val());
+
+        });
+
+
+
 
         $('#library-type').on('selectmenuchange', function() {
             var optionSelected = $("option:selected", this);
@@ -152,7 +170,23 @@
 
 
         $('#library-form').ajaxForm(function (e) {
-            alert(e);
+            var json = JSON.parse(e);
+
+            var code = "<br>\n<hr>";
+
+            if(json.errors.length != 0){
+                json.errors.forEach(function (item, pos, array) {
+                    if(pos != 0)
+                        code += "<br>\n";
+                    code += item;
+                });
+                $('#errors').html(code);
+            }
+            if(json.success){
+                alert("Библиотека добавлена");
+                $('#errors').html('');
+                update_libraryType($('#library-type').children('option:selected').val());
+            }
         });
 
 

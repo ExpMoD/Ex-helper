@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Exp-helper.iml" filepath="$PROJECT_DIR$/.idea/Exp-helper.iml" />
+      <module fileurl="file://F:\wamp64\www\exp-helper\.idea\Exp-helper.iml" filepath="F:\wamp64\www\exp-helper\.idea\Exp-helper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/exp-helper.iml" filepath="$PROJECT_DIR$/.idea/exp-helper.iml" />
     </modules>
   </component>
 </project>
