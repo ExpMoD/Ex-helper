@@ -53,7 +53,7 @@
                 </tr>
                 <tr>
                     <td style="padding-top: 10px;" colspan="2" align="center"><input id="library-submit" type="submit" value="Добавить">
-                        <input id="library-reset" type="reset" value="Сбросить"> <input type="hidden" name="_token" value="{{ csrf_token() }}" /></td>
+                        <input id="library-reset" type="reset" value="Сбросить"></td>
                 </tr>
             </table>
         </form>
@@ -82,19 +82,18 @@
     //region ----- Form handlers -----
 
     $(function () {
-        update_libraryType($('#library-type').children('option:selected').val());
-        update_libraryExistName($('#library-exist-name').children('option:selected').val());
+        update_libraryType();
+        update_libraryExistName();
 
         $('#library-reset').on('click', function (e) {
             e.preventDefault();
 
             $(this).closest('form').get(0).reset();
 
-            update_libraryType($('#library-type').children('option:selected').val());
-            update_libraryExistName($('#library-exist-name').children('option:selected').val());
+            update_libraryType();
+            update_libraryExistName();
 
         });
-
 
 
 
@@ -102,13 +101,17 @@
             var optionSelected = $("option:selected", this);
             var selectedValue = this.value;
 
-            update_libraryType(selectedValue);
+            update_libraryType();
         });
         
-        function update_libraryType(selectedValue){
+        function update_libraryType(){
+            var selectedValue = $('#library-type').children('option:selected').val();
+
             var AjaxData = {
                 selectedValue: selectedValue
             };
+
+
 
             Ajax_Transmitter(AjaxData, 'page_add_getLibsByType', {
                 success: function (returnData) {
@@ -137,10 +140,12 @@
         $('#library-exist-name').on('selectmenuchange', function () {
             var optionSelected = $("option:selected", this);
             var selectedValue = this.value;
-            update_libraryExistName(selectedValue);
+            update_libraryExistName();
         });
         
-        function update_libraryExistName(selectedValue) {
+        function update_libraryExistName() {
+            var selectedValue = $('#library-exist-name').children('option:selected').val();
+
             if(selectedValue == "new"){
                 $('#library-name').prop('disabled', false).val("");
             }else{
@@ -185,7 +190,8 @@
             if(json.success){
                 alert("Библиотека добавлена");
                 $('#errors').html('');
-                update_libraryType($('#library-type').children('option:selected').val());
+                update_libraryType();
+                $('#library-name').prop('disabled', false);
             }
         });
 

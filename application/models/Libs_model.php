@@ -24,7 +24,25 @@ class Libs_model extends CI_Model
         return (count($retVal->result()) == 0)?false:true;
     }
 
-    public function getLibsByType($type){
+    public function getNameLibsByType($type){
+        $this->db->select('*')
+                        ->from($this->table)
+                        ->where("type", $type)
+                        ->group_by("name");
+        $query = $this->db->get();
 
+        $retVal = [];
+
+        foreach ($query->result() as $row){
+            $curName = $row->name;
+
+            $curName = str_replace('_', ' ', $curName);
+
+            $curName = ucfirst($curName);
+
+            array_push($retVal, $curName);
+        }
+
+        return $retVal;
     }
 }

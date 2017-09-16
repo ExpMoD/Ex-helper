@@ -37,10 +37,10 @@ class Handlers extends CI_Controller
         $selVal = $_POST['selectedValue'];
 
         if($selVal == 'js'){
-            $libsArray = ["Jquery 3", "Jquery 2", "Jquery 1"];
+            $libsArray = $this->libs_model->getNameLibsByType('js');
             echo json_encode($libsArray);
         }else if($selVal == 'css'){
-            $libsArray = ["Jquery UI Structure", "Jquery UI", "Jquery UI Styles"];
+            $libsArray = $this->libs_model->getNameLibsByType('css');
             echo json_encode($libsArray);
         }
     }
@@ -65,7 +65,6 @@ class Handlers extends CI_Controller
                 'url' => (isset($_POST['library-url']))?$_POST['library-url']:null,
             );
 
-            $filename_generated = $post['name'].'-'.$post['version'].'.'.$post['type'];
 
             if($post['type'] != 'css' and $post['type'] != 'js')
                 array_push($retVal['errors'], 'Недоступный тип библиотеки');
@@ -76,15 +75,16 @@ class Handlers extends CI_Controller
             if($post['url'] == null and !isset($_FILES['library-file']))
                 array_push($retVal['errors'], 'Не выбран файл или ссылка на него');
 
-
-            if($post['existName'] != 'new'){
+            if($post['existName'] != 'new')
                 $post['name'] = $post['existName'];
-            }
 
 
-            if($this->libs_model->exist_lib($post['name'], $post['version'])){
+
+            $filename_generated = $post['name'].'-'.$post['version'].'.'.$post['type'];
+
+
+            if($this->libs_model->exist_lib($post['name'], $post['version']))
                 array_push($retVal['errors'], 'Библиотека с таким названием и версией уже существует');
-            }
 
 
             if($post['url'] != null){
