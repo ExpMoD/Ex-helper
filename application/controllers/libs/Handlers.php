@@ -11,6 +11,10 @@ class Handlers extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->database();
+
+        $this->load->model('libs_model');
+        $this->load->library('help_lib');
     }
 
     public function index()
@@ -48,7 +52,6 @@ class Handlers extends CI_Controller
     public function page_add_addLib(){
         $retVal = array('errors' => array(), 'success' => false);
 
-
         $config['upload_path'] = 'uploads/libs/';
         $config['allowed_types'] = 'php|js|css';
 
@@ -56,9 +59,9 @@ class Handlers extends CI_Controller
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $post = array(
                 'type' => (isset($_POST['library-type']))?$_POST['library-type']:null,
-                'existName' => (isset($_POST['library-exist-name']))?strtolower(str_replace('.', '_', $_POST['library-exist-name'])):null,
-                'name' => (isset($_POST['library-name']))?strtolower(str_replace('.','_', $_POST['library-name'])):null,
-                'version' => (isset($_POST['library-version']))?str_replace('.','_',$_POST['library-version']):null,
+                'existName' => (isset($_POST['library-exist-name']))?strtolower(str_replace(['.', ' '], '_', $_POST['library-exist-name'])):null,
+                'name' => (isset($_POST['library-name']))?strtolower(str_replace(['.', ' '],'_', $_POST['library-name'])):null,
+                'version' => (isset($_POST['library-version']))?str_replace(['.', ' '],'_',$_POST['library-version']):null,
                 'url' => (isset($_POST['library-url']))?$_POST['library-url']:null,
             );
 
@@ -74,33 +77,22 @@ class Handlers extends CI_Controller
                 array_push($retVal['errors'], 'Не выбран файл или ссылка на него');
 
 
-            // Существование ссылки (URL)
-            function check_url($url){
-                $url_c=parse_url($url);
-                if (!empty($url_c['host']) and checkdnsrr($url_c['host'])){
-                    if ($otvet=@get_headers($url)){
-                        return substr($otvet[0], 9, 3);
-                    }
-                }
-                return false;
+            if($post['existName'] != 'new'){
+                $post['name'] = $post['existName'];
             }
 
 
-            $file_upload = false;
+            if($this->libs_model->exist_lib($post['name'], $post['version'])){
+                array_push($retVal['errors'], 'Библиотека с таким названием и версией уже существует');
+            }
+
 
             if($post['url'] != null){
-                if(check_url($post['url'])){
-                    $finfo = new finfo(FILEINFO_MIME_TYPE);
-                    $typeFileUrl = $finfo->buffer(file_get_contents($post['url']));
-
+                if($this->help_lib->check_url($post['url'])){
                     if(empty($retVal['errors'])){
                         $local=$config['upload_path'].$filename_generated;
-                        if(!file_put_contents($local, file_get_contents($post['url']))){
-                            array_push($retVal['errors'], 'Ошибка записи файла');
-                        }else{
-                            //echo "Файл ".$filename_generated." Загружен";
-                            $file_upload = true;
-                        }
+
+                        $this->help_lib->download_file($post['url'], $local);
                     }
                 }else{
                     array_push($retVal['errors'], 'Ссылка не доступна');
@@ -112,12 +104,7 @@ class Handlers extends CI_Controller
                     $this->upload->initialize($config);
 
                     if(empty($retVal['errors'])){
-                        if(!$this->upload->do_upload("library-file")){
-                            array_push($retVal['errors'], $this->upload->display_errors());
-                        }else{
-                            //echo "Файл ".$filename_generated." Загружен";
-                            $file_upload = true;
-                        }
+                        $this->upload->do_upload("library-file");
                     }
                 }else{
                     array_push($retVal['errors'], 'Файл пустой');
@@ -125,11 +112,12 @@ class Handlers extends CI_Controller
             }
 
 
-            if($file_upload and empty($retVal['errors'])){
-                $this->load->database();
+            if(!file_exists($config['upload_path'].$filename_generated) and empty($retVal['errors'])){
+                array_push($retVal['errors'], 'Файла не удалось записать');
+            }
 
-                $this->load->model('libs_model');
 
+            if(empty($retVal['errors'])){
                 $this->libs_model->addLib([
                     'type' => $post['type'],
                     'name' => $post['name'],
@@ -145,10 +133,7 @@ class Handlers extends CI_Controller
 
             //echo json_encode($retVal, JSON_UNESCAPED_UNICODE);
 
-
-
             //return json_encode($retVal, JSON_UNESCAPED_UNICODE);
         }
-
     }
 }

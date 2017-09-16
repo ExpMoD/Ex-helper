@@ -53,7 +53,7 @@
                 </tr>
                 <tr>
                     <td style="padding-top: 10px;" colspan="2" align="center"><input id="library-submit" type="submit" value="Добавить">
-                        <input id="library-reset" type="reset" value="Сбросить"></td>
+                        <input id="library-reset" type="reset" value="Сбросить"> <input type="hidden" name="_token" value="{{ csrf_token() }}" /></td>
                 </tr>
             </table>
         </form>

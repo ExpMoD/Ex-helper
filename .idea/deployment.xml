@@ -10,6 +10,7 @@
           <excludedPaths>
             <excludedPath path="/www/exphelper.h1n.ru/user_guide" />
             <excludedPath local="true" path="$PROJECT_DIR$/user_guide" />
+            <excludedPath local="true" path="$PROJECT_DIR$/application/config/config.php" />
           </excludedPaths>
         </serverdata>
       </paths>
