@@ -45,4 +45,32 @@ class Libs_model extends CI_Model
 
         return $retVal;
     }
+
+
+    public function getVersionsLibByName($name){
+        $this->db->select('*')
+                        ->from($this->table)
+                        ->where("name", $name);
+        $query = $this->db->get();
+
+        $retVal = [];
+
+        foreach ($query->result() as $row){
+            array_push($retVal, $row->version);
+        }
+
+        return $retVal;
+    }
+
+    public function getLib($name, $version){
+        $this->db->select('*')
+            ->from($this->table)
+            ->where(['name' => $name, 'version' => $version]);
+
+        $query = $this->db->get();
+
+        $result = $query->result_array();
+
+        return (count($result) > 0)?$result[0]:false;
+    }
 }

@@ -57,8 +57,7 @@ $route['libs'] = "libs/index";
 $route['libs/handlers'] = 'libs/handlers';
 
 $route['libs/js/(:any)'] = "libs/js/all/$1";
-$route['libs/js/(:any)/last'] = "libs/js/last/$1";
-$route['libs/js/(:any)/first'] = "libs/js/first/$1";
+$route['libs/js/(:any)/(:any)'] = "libs/js/all/$1/$2";
 
 
 $route['404_override'] = '';
