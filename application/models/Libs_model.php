@@ -18,8 +18,8 @@ class Libs_model extends CI_Model
         $this->db->insert($this->table, $params);
     }
 
-    public function exist_lib($name, $version){
-        $retVal = $this->db->get_where($this->table, ['name' => $name, 'version' => $version]);
+    public function exist_lib($name, $version, $type){
+        $retVal = $this->db->get_where($this->table, ['name' => $name, 'version' => $version, 'type' => $type]);
 
         return (count($retVal->result()) == 0)?false:true;
     }
@@ -47,10 +47,10 @@ class Libs_model extends CI_Model
     }
 
 
-    public function getVersionsLibByName($name){
+    public function getVersionsLibByName($name, $type){
         $this->db->select('*')
                         ->from($this->table)
-                        ->where("name", $name);
+                        ->where(["name" => $name, 'type' => $type]);
         $query = $this->db->get();
 
         $retVal = [];
@@ -62,10 +62,10 @@ class Libs_model extends CI_Model
         return $retVal;
     }
 
-    public function getLib($name, $version){
+    public function getLib($name, $version, $type){
         $this->db->select('*')
             ->from($this->table)
-            ->where(['name' => $name, 'version' => $version]);
+            ->where(['name' => $name, 'version' => $version, 'type' => $type]);
 
         $query = $this->db->get();
 

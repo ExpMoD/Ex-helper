@@ -57,7 +57,7 @@
             $name = ucfirst(str_replace('_', ' ', $row['name']));
             $version = ucfirst(str_replace('_', '.', $row['version']));
 
-            echo '<a href="/libs/js/'.$row['name'].'">';
+            echo '<a href="/libs/css/'.$row['name'].'">';
             echo $name.' '.$version;
             echo '<a>';
 

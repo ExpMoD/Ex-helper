@@ -8,6 +8,9 @@
  */
 class Js extends CI_Controller
 {
+    public $type = 'js';
+    public $mimeType = 'text/javascript';
+
     public function __construct()
     {
         parent::__construct();
@@ -25,6 +28,7 @@ class Js extends CI_Controller
         $this->load->view('template/main-menu', $data);
         $this->load->view('template/admin-menus/admin-menu-libs');
 
+        $this->load->view('pages/libs/page_js');
 
         $this->load->view('template/footer', $data);
     }
@@ -35,7 +39,7 @@ class Js extends CI_Controller
             $data = array();
             $data['title'] = ucfirst(str_replace('_', ' ', urldecode($name)));
 
-            $listVers = $this->libs_model->getVersionsLibByName($name);
+            $listVers = $this->libs_model->getVersionsLibByName($name, $this->type);
 
             sort($listVers);
 
@@ -59,12 +63,12 @@ class Js extends CI_Controller
     }
 
     public function getLib($name = "None", $version = null){
-        if($lib = $this->libs_model->getLib($name, $version)){
+        if($lib = $this->libs_model->getLib($name, $version, $this->type)){
             //echo json_encode($lib);
             //$handle = fopen($lib['path'], "rs");
             //echo $handle;
 
-            $this->output->set_content_type('text/javascript');
+            $this->output->set_content_type($this->mimeType);
 
             echo file_get_contents($lib['path']);
         }
@@ -74,7 +78,7 @@ class Js extends CI_Controller
 
     public function first($name = null)
     {
-        $listVers = $this->libs_model->getVersionsLibByName($name);
+        $listVers = $this->libs_model->getVersionsLibByName($name, $this->type);
         sort($listVers);
 
         if(count($listVers) == 0){
@@ -82,7 +86,7 @@ class Js extends CI_Controller
             return;
         }
 
-        if($lib = $this->libs_model->getLib($name, $listVers[0])){
+        if($lib = $this->libs_model->getLib($name, $listVers[0], $this->type)){
             $this->output->set_content_type('text/javascript');
 
             echo file_get_contents($lib['path']);
@@ -91,7 +95,7 @@ class Js extends CI_Controller
 
     public function last($name = null)
     {
-        $listVers = $this->libs_model->getVersionsLibByName($name);
+        $listVers = $this->libs_model->getVersionsLibByName($name, $this->type);
         sort($listVers);
         $listVers = array_reverse($listVers);
 
@@ -100,7 +104,7 @@ class Js extends CI_Controller
             return;
         }
 
-        if($lib = $this->libs_model->getLib($name, $listVers[0])){
+        if($lib = $this->libs_model->getLib($name, $listVers[0], $this->type)){
             $this->output->set_content_type('text/javascript');
 
             echo file_get_contents($lib['path']);
