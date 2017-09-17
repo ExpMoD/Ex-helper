@@ -73,4 +73,17 @@ class Libs_model extends CI_Model
 
         return (count($result) > 0)?$result[0]:false;
     }
+
+
+    public function getLibsByType($type){
+        $this->db->select('*')
+                    ->from($this->table)
+                    ->where(['type' => $type])
+                    ->limit(10)
+                    ->order_by('id', 'DESC');
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
 }

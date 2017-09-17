@@ -14,6 +14,7 @@ class Js extends CI_Controller
         $this->load->database();
 
         $this->load->model('libs_model');
+        $this->load->library('help_lib');
     }
 
     public function index(){
@@ -35,6 +36,10 @@ class Js extends CI_Controller
             $data['title'] = ucfirst(str_replace('_', ' ', urldecode($name)));
 
             $listVers = $this->libs_model->getVersionsLibByName($name);
+
+            sort($listVers);
+
+            $listVers = array_reverse($listVers);
             $data['versions'] = $listVers;
 
             $this->load->view('template/header', $data);
@@ -69,15 +74,36 @@ class Js extends CI_Controller
 
     public function first($name = null)
     {
-        $data = array();
-        $data['title'] = urldecode($name).' Last';
-        $this->load->view('welcome_message', $data);
+        $listVers = $this->libs_model->getVersionsLibByName($name);
+        sort($listVers);
+
+        if(count($listVers) == 0){
+            echo 'Ошибка. Библиотека не найдена';
+            return;
+        }
+
+        if($lib = $this->libs_model->getLib($name, $listVers[0])){
+            $this->output->set_content_type('text/javascript');
+
+            echo file_get_contents($lib['path']);
+        }
     }
 
     public function last($name = null)
     {
-        $data = array();
-        $data['title'] = urldecode($name).' Last';
-        $this->load->view('welcome_message', $data);
+        $listVers = $this->libs_model->getVersionsLibByName($name);
+        sort($listVers);
+        $listVers = array_reverse($listVers);
+
+        if(count($listVers) == 0){
+            echo 'Ошибка. Библиотека не найдена';
+            return;
+        }
+
+        if($lib = $this->libs_model->getLib($name, $listVers[0])){
+            $this->output->set_content_type('text/javascript');
+
+            echo file_get_contents($lib['path']);
+        }
     }
 }
