@@ -11,7 +11,7 @@
     <div class="block-content" style="margin-top: 10px;">
         <form action="<?php echo base_url().$search_path;?>" method="get">
             <div class="control-group">
-                <input id="search-input" type="text" style="width: 85%;"><input id="search-btn" style="margin-top: -1px;" type="submit" class="ui-corner-tr ui-corner-br" value="Поиск">
+                <input id="search-input" name="text" type="text" style="width: 85%;"><input id="search-btn" style="margin-top: -1px;" type="submit" class="ui-corner-tr ui-corner-br" value="Поиск">
             </div>
         </form>
         <script>
