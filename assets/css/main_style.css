@@ -157,6 +157,13 @@ body{
 
 
 
+.input-text-std{
+    padding: .4em 1em;
+    display: inline-block;
+    position: relative;
+    line-height: normal;
+    overflow: visible;
+}
 
 
 
@@ -166,8 +173,7 @@ body{
 
 
 
-
-
+/*
 .input-text-std{
     font-size: 16px;
     padding-left: 17px;
@@ -234,7 +240,7 @@ body{
 .input-textarea-std:focus{
     outline: 1px solid #0073ff;
 }
-
+*/
 
 
 
@@ -282,3 +288,8 @@ body{
 .table-full-row td{
     padding-top: 10px;
 }
+
+
+
+
+

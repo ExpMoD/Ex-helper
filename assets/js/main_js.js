@@ -23,6 +23,13 @@ $(document).ready( function() {
 
 
 
+
+
+
+
+
+
+
 // isFunction взято со стэка
 function isFunction(functionToCheck)  {
     var getType = {};
@@ -61,5 +68,26 @@ function IsJsonString(str) {
                 selectElement.add(option, null);
             }
         });
-    }
+    };
+
+    $.fn.textBox = function (corners) {
+        var $this = $(this);
+
+        if(corners == null){
+            $this.addClass('ui-corner-all');
+        }else{
+            corners.forEach(function (p1, p2, p3) {
+                if(p1 == 'tl')
+                    $this.addClass('ui-corner-tl');
+                else if(p1 == 'bl')
+                    $this.addClass('ui-corner-bl');
+                else if(p1 == 'tr')
+                    $this.addClass('ui-corner-tr');
+                else if(p1 == 'br')
+                    $this.addClass('ui-corner-br');
+
+            });
+        }
+        return $(this).addClass("ui-widget ui-widget-content input-text-std");
+    };
 })(jQuery);

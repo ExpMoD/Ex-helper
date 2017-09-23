@@ -1,3 +1,23 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Andrey
+ * Date: 17.09.2017
+ * Time: 21:47
+ */
+?>
+
+<style>
+    .ui-textfield{
+        font: inherit;
+        color: inherit;
+        background: none;
+        text-align: inherit;
+        outline: none;
+        cursor: text;
+    }
+</style>
+
 <style>
     .lib-string-style{
         font-size: 18px;
@@ -13,32 +33,27 @@
     }
 </style>
 
+
+
 <div class="block">
-    <div class="block-title">Последние добавленные библиотеки</div>
+    <div class="block-title">CSS Библиотеки</div>
     <div class="block-content">
         <table class="table-full">
-            <?php
+        <?php
             if(isset($libs)){
                 foreach ($libs as $lib){
                     $name = ucfirst(str_replace('_', ' ', $lib['name']));
-                    $version = ucfirst(str_replace('_', '.', $lib['version']));
 
                     echo "<tr>";
-                        echo "<td class='lib-string-style'>";
+                    echo "<td class='lib-string-style'>";
                         echo "<a href='/libs/".$lib['type']."/".$lib['name']."'>";
-                        echo $name;
+                            echo $name;
                         echo "</a>";
-                        echo "</td>";
-
-                        echo "<td class='lib-string-style'>";
-                        echo "<a href='/libs/".$lib['type']."/".$lib['name']."'>";
-                        echo $version;
-                        echo "</a>";
-                        echo "</td>";
+                    echo "</td>";
                     echo "</tr>";
                 }
             }
-            ?>
+        ?>
         </table>
     </div>
 </div>

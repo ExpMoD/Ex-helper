@@ -7,19 +7,53 @@
  */
 ?>
 
-<div class="block">
-    <div class="block-content" style="margin-top: 10px;">
-        <form action="">
-            <input id="search-input" class="input-text-std" type="text" style="width: 80%;">
-            <input id="search-btn" type="submit" value="Поиск" style="margin-top: -3px;">
-        </form>
-        <script>
-            $('#search-btn').button();
-        </script>
-    </div>
-</div>
+<style>
+    .ui-textfield{
+        font: inherit;
+        color: inherit;
+        background: none;
+        text-align: inherit;
+        outline: none;
+        cursor: text;
+    }
+</style>
+
+<style>
+    .lib-string-style{
+        font-size: 18px;
+    }
+    .lib-string-style a{
+        text-decoration: none;
+        color: #ee872d;
+    }
+
+    .lib-string-style a:hover{
+        color: #b85c2d;
+        text-decoration: underline;
+    }
+</style>
+
+
 
 <div class="block">
     <div class="block-title">JS Библиотеки</div>
+    <div class="block-content">
+        <table class="table-full">
+        <?php
+            if(isset($libs)){
+                foreach ($libs as $lib){
+                    $name = ucfirst(str_replace('_', ' ', $lib['name']));
 
+                    echo "<tr>";
+                    echo "<td class='lib-string-style'>";
+                        echo "<a href='/libs/".$lib['type']."/".$lib['name']."'>";
+                            echo $name;
+                        echo "</a>";
+                    echo "</td>";
+                    echo "</tr>";
+                }
+            }
+        ?>
+        </table>
+    </div>
 </div>

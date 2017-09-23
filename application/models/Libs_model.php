@@ -12,6 +12,7 @@ class Libs_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->database();
     }
 
     public function addLib($params){
@@ -75,12 +76,25 @@ class Libs_model extends CI_Model
     }
 
 
-    public function getLibsByType($type){
+    public function getLibsByType($type, $count = 10, $orderBy = 'DESC', $groupBy = "id"){
         $this->db->select('*')
                     ->from($this->table)
                     ->where(['type' => $type])
-                    ->limit(10)
-                    ->order_by('id', 'DESC');
+                    ->group_by("name")
+                    ->limit($count)
+                    ->order_by('id', $orderBy);
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
+
+    public function getLastLibs($count = 10, $orderBy = 'DESC'){
+        $this->db->select('*')
+            ->from($this->table)
+            ->limit($count)
+            ->order_by('id', $orderBy);
 
         $query = $this->db->get();
 

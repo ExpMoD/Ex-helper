@@ -27,8 +27,11 @@ class Index extends CI_Controller
         $data['libsJS'] = $libsJS;
         $data['libsCSS'] = $libsCSS;
 
+        $data['search_path'] = "libs/search";
+
         $this->load->view('template/header', $data);
         $this->load->view('template/main-menu', $data);
+        $this->load->view('template/search-field', $data);
         $this->load->view('template/admin-menus/admin-menu-libs');
 
         $this->load->view('pages/libs/index', $data);

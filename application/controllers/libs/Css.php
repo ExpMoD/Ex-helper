@@ -22,12 +22,17 @@ class Css extends CI_Controller
 
     public function index(){
         $data = array();
-        $data['title'] = 'Js';
+        $data['title'] = 'Css';
+        $data['search_path'] = "libs/search";
+
+        $data['libs'] = $this->libs_model->getLibsByType($this->type, 100, 'DESC', "name");
 
         $this->load->view('template/header', $data);
         $this->load->view('template/main-menu', $data);
+        $this->load->view('template/search-field', $data);
         $this->load->view('template/admin-menus/admin-menu-libs');
 
+        $this->load->view('pages/libs/page_css');
 
         $this->load->view('template/footer', $data);
     }
@@ -44,9 +49,11 @@ class Css extends CI_Controller
 
             $listVers = array_reverse($listVers);
             $data['versions'] = $listVers;
+            $data['search_path'] = "libs/search";
 
             $this->load->view('template/header', $data);
             $this->load->view('template/main-menu', $data);
+            $this->load->view('template/search-field', $data);
             $this->load->view('template/admin-menus/admin-menu-libs');
 
             $this->load->view('pages/libs/page_library_list.php', $data);

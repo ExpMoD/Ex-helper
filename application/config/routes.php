@@ -53,6 +53,7 @@ $route['default_controller'] = 'main';
 
 
 $route['libs'] = "libs/index";
+$route['libs/search'] = "libs/search";
 
 $route['libs/handlers'] = 'libs/handlers';
 
