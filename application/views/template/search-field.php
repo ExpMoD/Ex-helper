@@ -15,8 +15,10 @@
             </div>
         </form>
         <script>
-            $('#search-input').textBox(['tl', 'bl']);
-            $('#search-btn').button().removeClass('ui-corner-all');
+            $(function () {
+                $('#search-input').textBox(['tl', 'bl']);
+                $('#search-btn').button().removeClass('ui-corner-all');
+            });
         </script>
     </div>
 </div>
