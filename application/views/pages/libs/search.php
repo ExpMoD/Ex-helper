@@ -34,7 +34,7 @@
 
                         echo "<tr>";
                             echo "<td style='color: #3420ff; font-weight: bold; text-align: center; width: 50px;'>";
-                            echo " (".$lib['type'].")";
+                            echo "(".$lib['type'].")";
                             echo "</td>";
 
                             echo "<td class='lib-string-style'>";
