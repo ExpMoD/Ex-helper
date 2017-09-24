@@ -112,4 +112,16 @@ class Libs_model extends CI_Model
 
         return $query->result_array();
     }
+
+
+    public function genSearch($text){
+        $this->db->select('*')
+            ->from($this->table)
+            ->group_by("name")
+            ->like('name', $text);
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
 }

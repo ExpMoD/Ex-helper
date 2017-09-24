@@ -136,4 +136,23 @@ class Handlers extends CI_Controller
             //return json_encode($retVal, JSON_UNESCAPED_UNICODE);
         }
     }
+
+    public function genSearch(){
+        $libs = $this->libs_model->genSearch($_POST['text']);
+
+        echo json_encode($libs, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function generateCode(){
+        $selLibs = $_POST['selectedLibs'];
+
+        foreach ($selLibs as $selLib){
+            if($selLib[1] == 'js'){
+                echo "<script type='text/javascript' src='".base_url("libs/js/".$selLib[0]."/last")."'>";
+            }else if($selLib[1] == 'css'){
+                echo "<link type='text/css' href='".base_url("libs/css/".$selLib[0]."/last")."'>";
+            }
+            echo "\n";
+        }
+    }
 }
